@@ -22,7 +22,7 @@ the UAE. Full-stack Next.js, backed by Neon PostgreSQL, deployed on Vercel.
 | `/about`, `/why-us`, `/faq`, `/contact` | Content pages |
 | `/policies/[slug]` | Shipping & Returns, Privacy, Terms |
 
-**Live demo:** _add your Vercel URL here after deploying_
+**Live demo:** https://mjq-investments.vercel.app/
 **Repository:** https://github.com/amalcpaulson/MJQ-Investments-
 
 ---
