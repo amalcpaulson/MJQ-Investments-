@@ -43,9 +43,12 @@ export default async function Home() {
     { name: "Proraso", origin: "Florence, Italy", blurb: "Barber-quality shaving and beard care since 1948.", href: "/collections/proraso", image: img("beard-oil-30ml-1-0-oz-wood-and-spice") },
   ];
 
+  // Hero uses background-removed (transparent) cutouts so products float on the scene.
   const slide = (handle: string): HeroSlide | null => {
     const p = byHandle.get(handle);
-    return p ? { handle: p.handle, title: p.title, price: formatPrice(p.priceFils), image: p.image, href: `/products/${p.handle}` } : null;
+    return p
+      ? { handle: p.handle, title: p.title, price: formatPrice(p.priceFils), image: `/products/cutouts/${p.handle}.png`, href: `/products/${p.handle}` }
+      : null;
   };
   const heroSlides: HeroSlide[] = [
     slide("shiseido-fino-premium-touch-mask-230g"),

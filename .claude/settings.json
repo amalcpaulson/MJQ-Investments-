@@ -28,7 +28,15 @@
       "Bash(python3 scripts/search.py \"luxury beauty ecommerce hero landing premium skincare elegant\" --design-system -p \"Luxury.ae\")",
       "Bash(python3 scripts/search.py \"hero carousel autoplay animation accessibility reduced-motion\" --domain ux -n 6)",
       "Bash(kill 53858)",
-      "Bash(kill 54409)"
+      "Bash(kill 54409)",
+      "Bash(python3 -m pip --version)",
+      "Bash(python3 -c \"import rembg; print\\('rembg present'\\)\")",
+      "Bash(python3 -c \"import PIL; print\\('PIL', PIL.__version__\\)\")",
+      "Bash(python3 -m pip install --user --quiet \"rembg\" \"onnxruntime\")",
+      "Bash(python3 -c \"import rembg, onnxruntime; print\\('rembg OK, onnxruntime', onnxruntime.__version__\\)\")",
+      "Bash(python3 /tmp/cutout.py)",
+      "Bash(python3 -c ' *)",
+      "Bash(kill 55148)"
     ]
   }
 }

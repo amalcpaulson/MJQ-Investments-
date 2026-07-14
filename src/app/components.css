@@ -539,11 +539,11 @@
   isolation: isolate;
   box-shadow: var(--shadow-lg);
 }
-/* warm bronze/gold scene with a spotlight glow behind the product */
+/* warm bronze/gold scene with a soft spotlight glow behind the product */
 .showcase-bg {
   position: absolute; inset: 0; z-index: 0;
   background:
-    radial-gradient(58% 46% at 50% 62%, rgba(250,244,230,0.92) 0%, rgba(238,224,196,0.35) 34%, transparent 62%),
+    radial-gradient(46% 40% at 50% 60%, rgba(250,244,230,0.42) 0%, rgba(238,224,196,0.14) 38%, transparent 62%),
     radial-gradient(90% 70% at 50% 120%, rgba(20,14,8,0.55), transparent 60%),
     linear-gradient(168deg, #6f532e 0%, #4c3820 46%, #2a1e12 100%);
 }
@@ -594,9 +594,8 @@
 .stage-item.on { opacity: 1; transform: scale(1); }
 .stage-img {
   object-fit: contain;
-  filter: drop-shadow(0 40px 45px rgba(0,0,0,0.5));
-  -webkit-mask-image: radial-gradient(ellipse 64% 76% at 50% 47%, #000 58%, transparent 82%);
-  mask-image: radial-gradient(ellipse 64% 76% at 50% 47%, #000 58%, transparent 82%);
+  /* transparent cutouts — shadow now follows the product silhouette */
+  filter: drop-shadow(0 34px 30px rgba(0,0,0,0.45));
 }
 
 /* product label chip */
