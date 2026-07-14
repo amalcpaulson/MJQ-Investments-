@@ -23,7 +23,8 @@
       "Bash(curl -sS \"https://luxuryuae.ae/collections/marvis/products.json?limit=250\" -o scripts/data/col-marvis.json -w \"http=%{http_code} size=%{size_download}\\\\n\")",
       "Bash(curl -sS \"https://luxuryuae.ae/blogs/luxury-uae.atom\" -o scripts/data/blog.atom -w \"http=%{http_code} size=%{size_download}\\\\n\")",
       "Bash(kill 50127)",
-      "Bash(git -c user.name=amalcpaulson -c user.email=internalfoodo@gmail.com commit -q -m ' *)"
+      "Bash(git -c user.name=amalcpaulson -c user.email=internalfoodo@gmail.com commit -q -m ' *)",
+      "Bash(kill 51618)"
     ]
   }
 }

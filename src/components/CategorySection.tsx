@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowIcon } from "./icons";
 
 export interface CategoryTile {
@@ -6,9 +7,10 @@ export interface CategoryTile {
   name: string;
   tagline: string;
   accent: string;
+  image?: string | null;
 }
 
-/** Shop-by-category tiles linking to real collection pages. */
+/** Shop-by-category lookbook tiles with real product imagery. */
 export default function CategorySection({ tiles }: { tiles: CategoryTile[] }) {
   return (
     <section className="section container" id="categories">
@@ -29,9 +31,18 @@ export default function CategorySection({ tiles }: { tiles: CategoryTile[] }) {
             style={{ "--tile-accent": cat.accent } as React.CSSProperties}
             aria-label={`Shop ${cat.name}`}
           >
-            <ArrowIcon className="cat-arrow" />
-            <span className="cat-name">{cat.name}</span>
-            <span className="cat-tag">{cat.tagline}</span>
+            <div className="cat-media">
+              {cat.image && (
+                <Image src={cat.image} alt={cat.name} fill sizes="(max-width: 900px) 50vw, 300px" className="cat-img" />
+              )}
+            </div>
+            <div className="cat-caption">
+              <div>
+                <span className="cat-name">{cat.name}</span>
+                <span className="cat-tag">{cat.tagline}</span>
+              </div>
+              <ArrowIcon className="cat-arrow" />
+            </div>
           </Link>
         ))}
       </div>

@@ -1,19 +1,14 @@
 import Link from "next/link";
 import Hero from "@/components/Hero";
 import CategorySection, { type CategoryTile } from "@/components/CategorySection";
+import BrandHouses, { type House } from "@/components/BrandHouses";
 import ProductGrid from "@/components/ProductGrid";
 import SectionHead from "@/components/SectionHead";
 import Newsletter from "@/components/Newsletter";
 import { getProducts, getBlogPosts } from "@/lib/catalog";
+import type { Product } from "@/db/schema";
 
 export const dynamic = "force-dynamic";
-
-const TILES: CategoryTile[] = [
-  { href: "/collections/marvis", name: "Oral Care", tagline: "Italian toothpaste & mouthwash", accent: "#1f3d2b" },
-  { href: "/collections/fino", name: "Hair Care", tagline: "Japanese premium repair", accent: "#7a5b34" },
-  { href: "/collections/proraso", name: "Grooming", tagline: "Classic Italian barbering", accent: "#2b2b2b" },
-  { href: "/collections/gift-set-collection", name: "Gift Sets", tagline: "Curated to be gifted", accent: "#8a6d3b" },
-];
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -31,16 +26,39 @@ export default async function Home() {
     getBlogPosts(),
   ]);
 
+  const byHandle = new Map(products.map((p) => [p.handle, p]));
+  const img = (handle: string) => byHandle.get(handle)?.image ?? null;
+
+  const tiles: CategoryTile[] = [
+    { href: "/collections/marvis", name: "Oral Care", tagline: "Italian toothpaste & mouthwash", accent: "#1f3d2b", image: img("marvis-classic-strong-mint-toothpaste-75ml") },
+    { href: "/collections/fino", name: "Hair Care", tagline: "Japanese premium repair", accent: "#7a5b34", image: img("shiseido-fino-premium-touch-mask-230g") },
+    { href: "/collections/proraso", name: "Grooming", tagline: "Classic Italian barbering", accent: "#2b2b2b", image: img("proraso-shaving-soap-in-a-bowl-150-ml-5-2-oz") },
+    { href: "/collections/gift-set-collection", name: "Gift Sets", tagline: "Curated to be gifted", accent: "#8a6d3b", image: img("marvis-gift-set-of-5") },
+  ];
+
+  const houses: House[] = [
+    { name: "Marvis", origin: "Florence, Italy", blurb: "Cult toothpaste in jewel-bright tubes — a small daily luxury.", href: "/collections/marvis", image: img("marvis-amarelli-licorice-mint-toothpaste-75ml") },
+    { name: "Fino", origin: "Tokyo, Japan", blurb: "Shiseido's Premium Touch — salon-grade repair for tired hair.", href: "/collections/fino", image: img("fino-shiseido-premium-touch-conditioner-550ml") },
+    { name: "Proraso", origin: "Florence, Italy", blurb: "Barber-quality shaving and beard care since 1948.", href: "/collections/proraso", image: img("beard-oil-30ml-1-0-oz-wood-and-spice") },
+  ];
+
   const featured = products.filter((p) => p.featured);
-  const showcase = (featured.length >= 4 ? featured : products).slice(0, 8);
+  const showcase: Product[] = (featured.length >= 4 ? featured : products).slice(0, 8);
   const journal = posts.slice(0, 3);
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <main id="main">
-        <Hero />
-        <CategorySection tiles={TILES} />
+        <Hero
+          mainImage={img("marvis-7-flavors-box-7-x-25ml-tubes")}
+          mainLabel="The 7 Flavours Box"
+          mainHref="/products/marvis-7-flavors-box-7-x-25ml-tubes"
+          accentImage={img("fino-shiseido-premium-touch-hair-oil")}
+          accentHref="/products/fino-shiseido-premium-touch-hair-oil"
+        />
+
+        <CategorySection tiles={tiles} />
 
         <section className="section container" id="collection">
           <div className="section-head">
@@ -58,6 +76,8 @@ export default async function Home() {
             <Link href="/collections" className="btn btn-primary">Shop all products</Link>
           </div>
         </section>
+
+        <BrandHouses houses={houses} />
 
         {journal.length > 0 && (
           <section className="section container" id="journal">
