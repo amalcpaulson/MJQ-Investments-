@@ -8,8 +8,8 @@ deployed on Vercel.
 > Redesign brief reference: [luxuryuae.ae](https://luxuryuae.ae/) (operated by MJQ Investment LLC).
 > The catalogue uses that real brand portfolio (Marvis, Fino, Proraso).
 
-**Live demo:** _add your Vercel URL here_
-**Repository:** _add your GitHub URL here_
+**Live demo:** _add your Vercel URL here after deploying_
+**Repository:** https://github.com/amalcpaulson/MJQ-Investments-
 
 ---
 
