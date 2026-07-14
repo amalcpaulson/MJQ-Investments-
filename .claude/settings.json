@@ -24,7 +24,10 @@
       "Bash(curl -sS \"https://luxuryuae.ae/blogs/luxury-uae.atom\" -o scripts/data/blog.atom -w \"http=%{http_code} size=%{size_download}\\\\n\")",
       "Bash(kill 50127)",
       "Bash(git -c user.name=amalcpaulson -c user.email=internalfoodo@gmail.com commit -q -m ' *)",
-      "Bash(kill 51618)"
+      "Bash(kill 51618)",
+      "Bash(python3 scripts/search.py \"luxury beauty ecommerce hero landing premium skincare elegant\" --design-system -p \"Luxury.ae\")",
+      "Bash(python3 scripts/search.py \"hero carousel autoplay animation accessibility reduced-motion\" --domain ux -n 6)",
+      "Bash(kill 53858)"
     ]
   }
 }

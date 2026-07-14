@@ -5,6 +5,8 @@ import "./components.css";
 import { CartProvider } from "@/components/cart/CartProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ScrollReveal from "@/components/ScrollReveal";
+
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -64,6 +66,7 @@ export default function RootLayout({
       </head>
       <body>
         <CartProvider>
+          <ScrollReveal />
           <a href="#main" className="skip-link">Skip to content</a>
           <Header />
           {children}

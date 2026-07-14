@@ -11,7 +11,7 @@ export default function Newsletter() {
 
   return (
     <section className="section container" id="membership">
-      <div className="newsletter">
+      <div className="newsletter reveal-scroll">
         <span className="eyebrow">Membership</span>
         <h2>Join the inner circle</h2>
         <p>

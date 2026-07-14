@@ -14,7 +14,7 @@ export interface CategoryTile {
 export default function CategorySection({ tiles }: { tiles: CategoryTile[] }) {
   return (
     <section className="section container" id="categories">
-      <div className="section-head">
+      <div className="section-head reveal-scroll">
         <div>
           <span className="eyebrow">Browse</span>
           <h2>Shop by category</h2>
@@ -27,7 +27,7 @@ export default function CategorySection({ tiles }: { tiles: CategoryTile[] }) {
           <Link
             key={cat.href}
             href={cat.href}
-            className="cat-tile"
+            className="cat-tile reveal-scroll"
             style={{ "--tile-accent": cat.accent } as React.CSSProperties}
             aria-label={`Shop ${cat.name}`}
           >

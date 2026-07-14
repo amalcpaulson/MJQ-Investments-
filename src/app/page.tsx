@@ -1,11 +1,12 @@
 import Link from "next/link";
-import Hero from "@/components/Hero";
+import HeroShowcase, { type HeroSlide } from "@/components/HeroShowcase";
 import CategorySection, { type CategoryTile } from "@/components/CategorySection";
 import BrandHouses, { type House } from "@/components/BrandHouses";
 import ProductGrid from "@/components/ProductGrid";
 import SectionHead from "@/components/SectionHead";
 import Newsletter from "@/components/Newsletter";
 import { getProducts, getBlogPosts } from "@/lib/catalog";
+import { formatPrice } from "@/lib/format";
 import type { Product } from "@/db/schema";
 
 export const dynamic = "force-dynamic";
@@ -42,6 +43,17 @@ export default async function Home() {
     { name: "Proraso", origin: "Florence, Italy", blurb: "Barber-quality shaving and beard care since 1948.", href: "/collections/proraso", image: img("beard-oil-30ml-1-0-oz-wood-and-spice") },
   ];
 
+  const slide = (handle: string): HeroSlide | null => {
+    const p = byHandle.get(handle);
+    return p ? { handle: p.handle, title: p.title, price: formatPrice(p.priceFils), image: p.image, href: `/products/${p.handle}` } : null;
+  };
+  const heroSlides: HeroSlide[] = [
+    slide("shiseido-fino-premium-touch-mask-230g"),
+    slide("marvis-7-flavors-box-7-x-25ml-tubes"),
+    slide("proraso-shaving-soap-in-a-bowl-150-ml-5-2-oz"),
+    slide("fino-shiseido-premium-touch-hair-oil"),
+  ].filter((s): s is HeroSlide => s !== null);
+
   const featured = products.filter((p) => p.featured);
   const showcase: Product[] = (featured.length >= 4 ? featured : products).slice(0, 8);
   const journal = posts.slice(0, 3);
@@ -50,13 +62,7 @@ export default async function Home() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <main id="main">
-        <Hero
-          mainImage={img("marvis-7-flavors-box-7-x-25ml-tubes")}
-          mainLabel="The 7 Flavours Box"
-          mainHref="/products/marvis-7-flavors-box-7-x-25ml-tubes"
-          accentImage={img("fino-shiseido-premium-touch-hair-oil")}
-          accentHref="/products/fino-shiseido-premium-touch-hair-oil"
-        />
+        <HeroShowcase slides={heroSlides} />
 
         <CategorySection tiles={tiles} />
 

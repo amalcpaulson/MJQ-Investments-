@@ -10,7 +10,7 @@ export default function ProductCard({ product }: { product: Product }) {
   const onSale = product.compareAtFils && product.compareAtFils > product.priceFils;
 
   return (
-    <article className="product-card">
+    <article className="product-card reveal-scroll">
       <Link href={href} className="product-art-link" aria-label={product.title}>
         <div className="product-art" style={{ "--card-accent": brandAccent(product.vendor) } as React.CSSProperties}>
           {product.featured && <span className="badge">Featured</span>}

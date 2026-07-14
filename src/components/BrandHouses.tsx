@@ -13,7 +13,7 @@ export interface House {
 export default function BrandHouses({ houses }: { houses: House[] }) {
   return (
     <section className="section container" id="houses">
-      <div className="section-head">
+      <div className="section-head reveal-scroll">
         <div>
           <span className="eyebrow">The houses</span>
           <h2>Three icons, one destination</h2>
@@ -23,7 +23,7 @@ export default function BrandHouses({ houses }: { houses: House[] }) {
 
       <div className="house-grid">
         {houses.map((h) => (
-          <Link key={h.name} href={h.href} className="house-card" aria-label={`Shop ${h.name}`}>
+          <Link key={h.name} href={h.href} className="house-card reveal-scroll" aria-label={`Shop ${h.name}`}>
             <div className="house-media">
               {h.image && <Image src={h.image} alt={h.name} fill sizes="(max-width: 860px) 100vw, 380px" className="house-img" />}
               <span className="house-origin">{h.origin}</span>
