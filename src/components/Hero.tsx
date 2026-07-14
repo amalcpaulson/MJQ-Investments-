@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 /** Editorial hero — headline, description, primary CTA, quiet proof stats. */
 export default function Hero() {
   return (
@@ -13,7 +15,7 @@ export default function Hero() {
             to your door — authentic, effortless, and beautifully considered.
           </p>
           <div className="hero-cta">
-            <a href="#collection" className="btn btn-primary">Shop the collection</a>
+            <Link href="/collections" className="btn btn-primary">Shop the collection</Link>
             <a href="#categories" className="btn btn-ghost">Explore categories</a>
           </div>
           <div className="hero-stats">

@@ -1,12 +1,26 @@
-# Luxury.ae — Premium Homepage
+# Luxury.ae — Full E-commerce Website
 
-A modern, premium, responsive storefront homepage for **Luxury.ae**, a luxury
-shopping and brand-discovery platform for premium beauty, hair and personal-care
-in the UAE. Built as a full-stack Next.js prototype backed by Neon PostgreSQL and
-deployed on Vercel.
+A modern, premium, responsive **multi-page storefront** for **Luxury.ae**, a luxury
+shopping and brand-discovery platform for premium beauty, hair and personal-care in
+the UAE. Full-stack Next.js, backed by Neon PostgreSQL, deployed on Vercel.
 
-> Redesign brief reference: [luxuryuae.ae](https://luxuryuae.ae/) (operated by MJQ Investment LLC).
-> The catalogue uses that real brand portfolio (Marvis, Fino, Proraso).
+> Redesign of [luxuryuae.ae](https://luxuryuae.ae/) (operated by MJQ Investment LLC).
+> Catalogue, imagery and copy were scraped from the real store: **35 products,
+> 12 collections, 30 journal articles, 53 product images** — reshaped into an
+> original design (not a clone).
+
+## Pages / routes
+
+| Route | Description |
+|---|---|
+| `/` | Homepage — hero, categories, featured products, journal, newsletter |
+| `/collections` | Shop-all with brand filter, search & sort |
+| `/collections/[handle]` | Category pages (Toothpaste, Mouthwash, Hair Care, Grooming, Gift Sets, …) |
+| `/products/[handle]` | Product detail — gallery, price, stock, add-to-cart, related |
+| `/cart` | Cart with quantity controls, totals, free-shipping threshold, checkout |
+| `/blogs`, `/blogs/[handle]` | The Journal — index + articles |
+| `/about`, `/why-us`, `/faq`, `/contact` | Content pages |
+| `/policies/[slug]` | Shipping & Returns, Privacy, Terms |
 
 **Live demo:** _add your Vercel URL here after deploying_
 **Repository:** https://github.com/amalcpaulson/MJQ-Investments-
@@ -32,8 +46,8 @@ there are no external image/CDN dependencies and nothing to break on deploy.
 
 Quiet-luxury aesthetic per the brief: ivory / warm-neutral canvas, ink type,
 **gold + deep-green** accents, large serif display type, generous spacing and
-subtle hover motion. Product imagery is rendered as branded typographic art
-(brand initial on a per-product gradient) — premium and immune to broken images.
+subtle hover motion. Real product photography (downloaded from the source store)
+is served locally and optimised with `next/image`, on soft neutral tiles.
 
 ## 3. Setup instructions
 
@@ -72,12 +86,13 @@ Useful scripts: `npm run build`, `npm run start`, `npm run lint`, `npm run db:st
 
 | Table | Purpose | Key columns |
 |---|---|---|
-| `products` | catalogue | slug, name, brand, category, price, size, badge, accent, featured |
-| `categories` | shop-by-category tiles | slug, name, tagline, accent |
+| `products` | catalogue | handle, title, vendor, product_type, price_fils, images, body_html, collections, variants, featured |
+| `collections` | categories | handle, title, description, product_handles |
+| `blog_posts` | the journal | handle, title, published, content_html |
 | `subscribers` | newsletter sign-ups (unique email) | email, created_at |
 
-The homepage reads `products`/`categories` at request time (`dynamic = "force-dynamic"`);
-the newsletter form writes to `subscribers` via a Server Action (`src/app/actions.ts`).
+Pages read from Postgres at request time (`dynamic = "force-dynamic"`); the newsletter
+form writes to `subscribers` via a Server Action (`src/app/actions.ts`).
 
 ## 5. Deploy to Vercel
 
@@ -88,26 +103,29 @@ the newsletter form writes to `subscribers` via a Server Action (`src/app/action
 
 ## 6. Features completed
 
-- Premium, responsive homepage: header nav, hero (headline + description + CTAs + proof stats), shop-by-category, featured product grid, membership/newsletter, footer.
-- **Neon + Drizzle integration** — products & categories read live from Postgres; newsletter persists to `subscribers`.
-- **Category filtering** + **live product search** with an accessible empty state.
-- **Newsletter form** with client + server email validation, `onConflictDoNothing` de-dupe, and success/error feedback.
-- **Loading skeletons** via React `<Suspense>` around the data-fetching boundary.
-- **Dark mode** (no-flash, system-aware, persisted) via `useSyncExternalStore`.
-- **Error handling** — graceful DB→fallback so the page never breaks; honest live/preview status indicator.
-- **Accessibility** — semantic landmarks, skip link, labelled controls, `aria-live` form status, visible focus rings, `prefers-reduced-motion` support, `role="img"` on the art cards.
-- **SEO** — full metadata (Open Graph/Twitter), JSON-LD `Store` structured data, semantic headings.
-- Clean, reusable component structure; passes `next lint` and `next build` with zero errors/warnings.
+- **Full multi-page storefront** — home, shop-all, category pages, product detail, cart, journal, and content/policy pages (see routes table above).
+- **Real scraped catalogue** — 35 products with genuine imagery (optimised via `next/image`), descriptions, prices and variants; 12 collections; 30 articles.
+- **Neon + Drizzle integration** — products, collections and blog posts read live from Postgres; newsletter persists to `subscribers`.
+- **Shopping cart** — add/remove/quantity, subtotal + shipping + total, free-shipping threshold, checkout confirmation; persisted to `localStorage` via a `useSyncExternalStore` store.
+- **Browsing** — brand filter, live search and price sort with an accessible empty state; product detail with image gallery + related products.
+- **Newsletter** with client + server email validation, `onConflictDoNothing` de-dupe, success/error feedback.
+- **Dark mode** (no-flash, system-aware, persisted).
+- **Error handling** — graceful DB to bundled-JSON fallback so every page renders even if the DB is down; honest live/preview indicator.
+- **Accessibility** — semantic landmarks, skip link, breadcrumbs, labelled controls, `aria-live` regions, visible focus rings, `prefers-reduced-motion`.
+- **SEO** — per-page metadata, Open Graph/Twitter, JSON-LD (`Store`, `Product`, `FAQPage`).
+- Clean, reusable components; passes `next lint` and `next build` with zero errors/warnings.
 
 ## 7. What I'd add with more time
 
-- Product detail pages (`/products/[slug]`) and real cart + checkout state.
-- Real product photography with `next/image` + optimisation.
+- Real checkout + payment gateways for the UAE (Tabby, Tamara, card, COD).
+- Accounts/auth, wishlist, order history; server-side cart.
 - Bilingual **EN / Arabic** with full RTL (the CSS already uses logical properties).
-- Cart persistence, wishlist, and account/auth.
 - Admin panel for catalogue & inventory management.
-- Automated tests (Vitest/Playwright) and 301 redirects from the legacy URLs.
-- Payment gateways relevant to the UAE (Tabby, Tamara, card, COD).
+- Automated tests (Vitest/Playwright) and 301 redirects from the legacy Shopify URLs.
+
+> **Data note:** the catalogue was scraped from the live store's public Shopify JSON
+> endpoints and normalised into `src/data/*.json`, which both seeds Neon and acts as
+> the offline fallback. Product images live in `/public/products`.
 
 ---
 

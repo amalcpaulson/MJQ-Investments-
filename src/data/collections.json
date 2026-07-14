@@ -1,0 +1,161 @@
+[
+ {
+  "handle": "marvis",
+  "title": "Marvis",
+  "description": "",
+  "productCount": 13,
+  "productHandles": [
+   "marvis-whitening-mint-toothpaste-75ml",
+   "marvis-sensitive-gum-mint-toothpaste-75ml",
+   "marvis-classic-strong-mint-toothpaste-75ml",
+   "marvis-amarelli-licorice-mint-toothpaste-25ml",
+   "marvis-aquatic-mint-toothpaste-25ml",
+   "marvis-smokers-whitening-mint-toothpaste-85ml",
+   "marvis-amarelli-licorice-mint-toothpaste-75ml",
+   "marvis-jasmin-mint-toothpaste-75ml",
+   "marvis-cinnamon-mint-toothpaste-85ml",
+   "marvis-ginger-mint-toothpaste-75ml",
+   "marvis-cinnamon-mint-toothpaste-25ml",
+   "jasmin-mint-25ml",
+   "ginger-mint-25ml"
+  ]
+ },
+ {
+  "handle": "toothpaste-75ml",
+  "title": "Toothpaste 75ml",
+  "description": "",
+  "productCount": 7,
+  "productHandles": [
+   "marvis-whitening-mint-toothpaste-75ml",
+   "marvis-sensitive-gum-mint-toothpaste-75ml",
+   "marvis-classic-strong-mint-toothpaste-75ml",
+   "marvis-jasmin-mint-toothpaste-75ml",
+   "marvis-amarelli-licorice-mint-toothpaste-75ml",
+   "marvis-ginger-mint-toothpaste-75ml",
+   "marvis-cinnamon-mint-toothpaste-85ml"
+  ]
+ },
+ {
+  "handle": "toothpaste-25ml",
+  "title": "Toothpaste 25ml",
+  "description": "",
+  "productCount": 5,
+  "productHandles": [
+   "marvis-amarelli-licorice-mint-toothpaste-25ml",
+   "marvis-aquatic-mint-toothpaste-25ml",
+   "jasmin-mint-25ml",
+   "ginger-mint-25ml",
+   "marvis-cinnamon-mint-toothpaste-25ml"
+  ]
+ },
+ {
+  "handle": "mouthwash",
+  "title": "Mouthwash",
+  "description": "",
+  "productCount": 4,
+  "productHandles": [
+   "marvis-anise-mint-mouthwash-120ml",
+   "marvis-cinnamon-mint-mouthwash-120ml",
+   "marvis-spearmint-mouthwash-120ml",
+   "marvis-strong-mint-mouthwash-120ml"
+  ]
+ },
+ {
+  "handle": "toothbrushes",
+  "title": "Toothbrushes",
+  "description": "",
+  "productCount": 2,
+  "productHandles": [
+   "marvis-white-soft-toothbrush",
+   "marvis-medium-black-toothbrush"
+  ]
+ },
+ {
+  "handle": "fino",
+  "title": "Buy Fino Premium Touch Hair Products UAE | Shampoo, Conditioner, Hair Mask & Hair Oil",
+  "description": "",
+  "productCount": 3,
+  "productHandles": [
+   "shiseido-fino-premium-touch-moisturizing-hair-shampoo-550ml",
+   "fino-shiseido-premium-touch-hair-oil",
+   "shiseido-fino-premium-touch-mask-230g"
+  ]
+ },
+ {
+  "handle": "proraso",
+  "title": "Proraso",
+  "description": "",
+  "productCount": 10,
+  "productHandles": [
+   "proraso-beard-wash-200ml-6-8-oz-wood-and-spice",
+   "proraso-beard-balm-100ml-3-4-oz-wood-and-spice",
+   "proraso-after-shave-balm-100ml-3-4-oz-wood-and-spice",
+   "beard-oil-30ml-1-0-oz-wood-and-spice",
+   "proraso-hot-oil-beard-treatment-4-17-ml-4-pcs-4-0-6-oz",
+   "moustache-wax-15-ml-0-5-oz-wood-and-spice",
+   "pre-shave-cream-100ml-3-6-oz",
+   "after-shave-balm-100ml-3-4-oz",
+   "proraso-shaving-soap-in-a-bowl-150-ml-5-2-oz",
+   "proraso-shaving-cream-tube-150-ml-5-2-oz"
+  ]
+ },
+ {
+  "handle": "proraso-shaving-products",
+  "title": "Proraso Shaving Products",
+  "description": "",
+  "productCount": 4,
+  "productHandles": [
+   "pre-shave-cream-100ml-3-6-oz",
+   "after-shave-balm-100ml-3-4-oz",
+   "proraso-shaving-soap-in-a-bowl-150-ml-5-2-oz",
+   "proraso-shaving-cream-tube-150-ml-5-2-oz"
+  ]
+ },
+ {
+  "handle": "proraso-beard-moustache-care",
+  "title": "Proraso Beard & Moustache Care",
+  "description": "",
+  "productCount": 6,
+  "productHandles": [
+   "proraso-beard-wash-200ml-6-8-oz-wood-and-spice",
+   "proraso-beard-balm-100ml-3-4-oz-wood-and-spice",
+   "proraso-after-shave-balm-100ml-3-4-oz-wood-and-spice",
+   "beard-oil-30ml-1-0-oz-wood-and-spice",
+   "proraso-hot-oil-beard-treatment-4-17-ml-4-pcs-4-0-6-oz",
+   "moustache-wax-15-ml-0-5-oz-wood-and-spice"
+  ]
+ },
+ {
+  "handle": "gift-set-collection",
+  "title": "Gift Set Collection",
+  "description": "",
+  "productCount": 2,
+  "productHandles": [
+   "marvis-gift-set-of-5",
+   "marvis-7-flavors-box-7-x-25ml-tubes"
+  ]
+ },
+ {
+  "handle": "uae-favorite",
+  "title": "UAE FAVORITE",
+  "description": "",
+  "productCount": 3,
+  "productHandles": [
+   "marvis-amarelli-licorice-mint-toothpaste-25ml",
+   "ginger-mint-25ml",
+   "jasmin-mint-25ml"
+  ]
+ },
+ {
+  "handle": "featured",
+  "title": "Featured",
+  "description": "",
+  "productCount": 4,
+  "productHandles": [
+   "marvis-whitening-mint-toothpaste-75ml",
+   "marvis-aquatic-mint-toothpaste-25ml",
+   "jasmin-mint-25ml",
+   "marvis-cinnamon-mint-toothpaste-25ml"
+  ]
+ }
+]

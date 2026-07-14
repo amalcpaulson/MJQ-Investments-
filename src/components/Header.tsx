@@ -1,40 +1,51 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
-import { CartIcon, MenuIcon, CloseIcon } from "./icons";
+import { useCart } from "./cart/CartProvider";
+import { CartIcon, SearchIcon, MenuIcon, CloseIcon } from "./icons";
 
 const LINKS = [
-  { href: "#categories", label: "Categories" },
-  { href: "#collection", label: "Collection" },
-  { href: "#journal", label: "The Edit" },
-  { href: "#membership", label: "Membership" },
+  { href: "/collections/marvis", label: "Toothpaste" },
+  { href: "/collections/mouthwash", label: "Mouthwash" },
+  { href: "/collections/fino", label: "Hair Care" },
+  { href: "/collections/proraso", label: "Grooming" },
+  { href: "/collections/gift-set-collection", label: "Gift Sets" },
+  { href: "/blogs", label: "Journal" },
 ];
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const { count, ready } = useCart();
 
   return (
     <header className="site-header">
       <div className="container header-inner">
-        <a href="#top" className="brand" aria-label="Luxury.ae home">
+        <Link href="/" className="brand" aria-label="Luxury.ae home">
           LUXURY<span className="dot-ae">.ae</span>
-        </a>
+        </Link>
 
         <nav className={`nav ${open ? "open" : ""}`} aria-label="Primary">
           {LINKS.map((l) => (
-            <a key={l.href} href={l.href} onClick={() => setOpen(false)}>
+            <Link key={l.href} href={l.href} onClick={() => setOpen(false)}>
               {l.label}
-            </a>
+            </Link>
           ))}
+          <Link href="/collections" onClick={() => setOpen(false)} className="nav-all">
+            Shop all
+          </Link>
         </nav>
 
         <div className="header-actions">
+          <Link href="/collections" className="icon-btn" aria-label="Search products">
+            <SearchIcon />
+          </Link>
           <ThemeToggle />
-          <button type="button" className="icon-btn" aria-label="Cart (0 items)" style={{ position: "relative" }}>
+          <Link href="/cart" className="icon-btn" aria-label={`Cart, ${count} items`} style={{ position: "relative" }}>
             <CartIcon />
-            <span className="cart-count" aria-hidden="true">0</span>
-          </button>
+            {ready && count > 0 && <span className="cart-count" aria-hidden="true">{count}</span>}
+          </Link>
           <button
             type="button"
             className="icon-btn menu-btn"

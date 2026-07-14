@@ -1,8 +1,15 @@
-import type { Category } from "../db/schema";
+import Link from "next/link";
 import { ArrowIcon } from "./icons";
 
-/** Shop-by-category tiles. Anchor links jump to the filtered collection. */
-export default function CategorySection({ categories }: { categories: Category[] }) {
+export interface CategoryTile {
+  href: string;
+  name: string;
+  tagline: string;
+  accent: string;
+}
+
+/** Shop-by-category tiles linking to real collection pages. */
+export default function CategorySection({ tiles }: { tiles: CategoryTile[] }) {
   return (
     <section className="section container" id="categories">
       <div className="section-head">
@@ -14,10 +21,10 @@ export default function CategorySection({ categories }: { categories: Category[]
       </div>
 
       <div className="cat-grid">
-        {categories.map((cat) => (
-          <a
-            key={cat.slug}
-            href={`#collection`}
+        {tiles.map((cat) => (
+          <Link
+            key={cat.href}
+            href={cat.href}
             className="cat-tile"
             style={{ "--tile-accent": cat.accent } as React.CSSProperties}
             aria-label={`Shop ${cat.name}`}
@@ -25,7 +32,7 @@ export default function CategorySection({ categories }: { categories: Category[]
             <ArrowIcon className="cat-arrow" />
             <span className="cat-name">{cat.name}</span>
             <span className="cat-tag">{cat.tagline}</span>
-          </a>
+          </Link>
         ))}
       </div>
     </section>

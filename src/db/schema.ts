@@ -5,35 +5,58 @@ import {
   integer,
   boolean,
   timestamp,
+  jsonb,
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 
-/**
- * Product catalogue for the Luxury.ae storefront.
- * Prices are whole AED (dirhams) to keep the demo simple.
- */
+/** Product catalogue (scraped from the real Luxury.ae brand portfolio). */
 export const products = pgTable("products", {
   id: serial("id").primaryKey(),
-  slug: text("slug").notNull().unique(),
-  name: text("name").notNull(),
-  brand: text("brand").notNull(),
-  category: text("category").notNull(), // matches categories.slug
-  price: integer("price").notNull(), // AED
-  size: text("size"),
-  description: text("description").notNull(),
-  badge: text("badge"), // e.g. "Bestseller", "New"
-  accent: text("accent").notNull().default("#1f3d2b"), // card art colour
+  handle: text("handle").notNull().unique(),
+  title: text("title").notNull(),
+  vendor: text("vendor").notNull(),
+  productType: text("product_type").notNull().default(""),
+  priceFils: integer("price_fils").notNull(),
+  compareAtFils: integer("compare_at_fils"),
+  available: boolean("available").notNull().default(true),
+  bodyHtml: text("body_html").notNull().default(""),
+  excerpt: text("excerpt").notNull().default(""),
+  image: text("image"),
+  images: jsonb("images").$type<string[]>().notNull().default([]),
+  tags: jsonb("tags").$type<string[]>().notNull().default([]),
+  collections: jsonb("collections").$type<string[]>().notNull().default([]),
+  variants: jsonb("variants").$type<ProductVariant[]>().notNull().default([]),
   featured: boolean("featured").notNull().default(false),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-/** Shop-by-category tiles. */
-export const categories = pgTable("categories", {
+export interface ProductVariant {
+  title: string;
+  priceFils: number;
+  available: boolean;
+  sku: string;
+}
+
+/** Collections / categories. */
+export const collections = pgTable("collections", {
   id: serial("id").primaryKey(),
-  slug: text("slug").notNull().unique(),
-  name: text("name").notNull(),
-  tagline: text("tagline").notNull(),
-  accent: text("accent").notNull().default("#1f3d2b"),
+  handle: text("handle").notNull().unique(),
+  title: text("title").notNull(),
+  description: text("description").notNull().default(""),
+  productCount: integer("product_count").notNull().default(0),
+  productHandles: jsonb("product_handles").$type<string[]>().notNull().default([]),
+});
+
+/** Editorial / blog. */
+export const blogPosts = pgTable("blog_posts", {
+  id: serial("id").primaryKey(),
+  handle: text("handle").notNull().unique(),
+  title: text("title").notNull(),
+  published: text("published").notNull().default(""),
+  author: text("author").notNull().default("Luxury.ae"),
+  excerpt: text("excerpt").notNull().default(""),
+  contentHtml: text("content_html").notNull().default(""),
+  image: text("image"),
 });
 
 /** Newsletter / membership sign-ups. */
@@ -49,5 +72,6 @@ export const subscribers = pgTable(
 
 export type Product = typeof products.$inferSelect;
 export type NewProduct = typeof products.$inferInsert;
-export type Category = typeof categories.$inferSelect;
+export type Collection = typeof collections.$inferSelect;
+export type BlogPost = typeof blogPosts.$inferSelect;
 export type Subscriber = typeof subscribers.$inferSelect;

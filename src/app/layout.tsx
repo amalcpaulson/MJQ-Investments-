@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import "./components.css";
+import { CartProvider } from "@/components/cart/CartProvider";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -60,8 +63,12 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
       </head>
       <body>
-        <a href="#collection" className="skip-link">Skip to products</a>
-        {children}
+        <CartProvider>
+          <a href="#main" className="skip-link">Skip to content</a>
+          <Header />
+          {children}
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );

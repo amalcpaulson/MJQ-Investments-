@@ -13,7 +13,17 @@
       "Bash(curl -s http://localhost:9222/json/version)",
       "Bash(kill 45832)",
       "Bash(pkill -f \"remote-debugging-port=9222\")",
-      "Bash(kill 47421)"
+      "Bash(kill 47421)",
+      "Bash(gh auth *)",
+      "Bash(vercel whoami *)",
+      "Bash(npx --no-install vercel --version)",
+      "Bash(git -c user.name=amalcpaulson -c user.email=internalfoodo@gmail.com commit -q -m 'docs: add repository URL to README *)",
+      "Bash(curl -s \"https://luxuryuae.ae/products.json?limit=250\" -o scripts/data/products.json)",
+      "Bash(curl -s \"https://luxuryuae.ae/collections.json?limit=250\" -o scripts/data/collections.json)",
+      "Bash(curl -sS \"https://luxuryuae.ae/collections/marvis/products.json?limit=250\" -o scripts/data/col-marvis.json -w \"http=%{http_code} size=%{size_download}\\\\n\")",
+      "Bash(curl -sS \"https://luxuryuae.ae/blogs/luxury-uae.atom\" -o scripts/data/blog.atom -w \"http=%{http_code} size=%{size_download}\\\\n\")",
+      "Bash(kill 50127)",
+      "Bash(git -c user.name=amalcpaulson -c user.email=internalfoodo@gmail.com commit -q -m ' *)"
     ]
   }
 }
