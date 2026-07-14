@@ -6,6 +6,7 @@ import { CartProvider } from "@/components/cart/CartProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
+import ChatWidget from "@/components/chat/ChatWidget";
 
 
 const playfair = Playfair_Display({
@@ -71,6 +72,7 @@ export default function RootLayout({
           <Header />
           {children}
           <Footer />
+          <ChatWidget />
         </CartProvider>
       </body>
     </html>

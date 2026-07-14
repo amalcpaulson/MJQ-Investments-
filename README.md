@@ -90,6 +90,7 @@ Useful scripts: `npm run build`, `npm run start`, `npm run lint`, `npm run db:st
 | `collections` | categories | handle, title, description, product_handles |
 | `blog_posts` | the journal | handle, title, published, content_html |
 | `subscribers` | newsletter sign-ups (unique email) | email, created_at |
+| `orders` | orders from checkout & the AI concierge | order_number, name, email, phone, address, items, total_fils, channel |
 
 Pages read from Postgres at request time (`dynamic = "force-dynamic"`); the newsletter
 form writes to `subscribers` via a Server Action (`src/app/actions.ts`).
@@ -107,6 +108,7 @@ form writes to `subscribers` via a Server Action (`src/app/actions.ts`).
 - **Real scraped catalogue** — 35 products with genuine imagery (optimised via `next/image`), descriptions, prices and variants; 12 collections; 30 articles.
 - **Neon + Drizzle integration** — products, collections and blog posts read live from Postgres; newsletter persists to `subscribers`.
 - **Shopping cart** — add/remove/quantity, subtotal + shipping + total, free-shipping threshold, checkout confirmation; persisted to `localStorage` via a `useSyncExternalStore` store.
+- **AI concierge chatbot** — a floating assistant that searches the catalogue and **places orders in chat** (writing to the Neon `orders` table). Powered by the Anthropic API (`claude-haiku-4-5`) with tool-calling (`search_products`, `place_order`) via `/api/chat`; degrades to a deterministic assistant when `ANTHROPIC_API_KEY` is unset, so it works with or without a key.
 - **Browsing** — brand filter, live search and price sort with an accessible empty state; product detail with image gallery + related products.
 - **Newsletter** with client + server email validation, `onConflictDoNothing` de-dupe, success/error feedback.
 - **Dark mode** (no-flash, system-aware, persisted).

@@ -59,3 +59,15 @@ export const ArrowIcon = ({ size = 18, className }: IconProps) => (
     <path d="M7 17 17 7M8 7h9v9" />
   </svg>
 );
+
+export const ChatIcon = ({ size = 22, className }: IconProps) => (
+  <svg {...base(size)} className={className}>
+    <path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8A8.5 8.5 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5Z" />
+  </svg>
+);
+
+export const SendIcon = ({ size = 18, className }: IconProps) => (
+  <svg {...base(size)} className={className}>
+    <path d="M22 2 11 13M22 2l-7 20-4-9-9-4Z" />
+  </svg>
+);

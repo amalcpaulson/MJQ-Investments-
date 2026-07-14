@@ -59,6 +59,28 @@ export const blogPosts = pgTable("blog_posts", {
   image: text("image"),
 });
 
+/** Orders placed through the site or the AI concierge. */
+export const orders = pgTable("orders", {
+  id: serial("id").primaryKey(),
+  orderNumber: text("order_number").notNull(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone").notNull().default(""),
+  address: text("address").notNull().default(""),
+  items: jsonb("items").$type<OrderLine[]>().notNull().default([]),
+  totalFils: integer("total_fils").notNull().default(0),
+  channel: text("channel").notNull().default("web"), // "web" | "chatbot"
+  status: text("status").notNull().default("received"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export interface OrderLine {
+  handle: string;
+  title: string;
+  priceFils: number;
+  qty: number;
+}
+
 /** Newsletter / membership sign-ups. */
 export const subscribers = pgTable(
   "subscribers",
@@ -75,3 +97,5 @@ export type NewProduct = typeof products.$inferInsert;
 export type Collection = typeof collections.$inferSelect;
 export type BlogPost = typeof blogPosts.$inferSelect;
 export type Subscriber = typeof subscribers.$inferSelect;
+export type Order = typeof orders.$inferSelect;
+export type NewOrder = typeof orders.$inferInsert;

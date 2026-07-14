@@ -649,3 +649,98 @@
   .showcase-headline .line, .showcase-stage, .stage-item { animation: none !important; }
   .stage-item { transition: opacity 0.2s linear; }
 }
+
+/* ==========================================================================
+   Concierge chat widget
+   ========================================================================== */
+.chat-fab {
+  position: fixed; z-index: 80; right: clamp(1rem, 3vw, 1.75rem); bottom: clamp(1rem, 3vw, 1.75rem);
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  padding: 0.8rem 1.25rem 0.8rem 1rem; border-radius: 999px; border: none;
+  background: var(--ink); color: var(--canvas); box-shadow: var(--shadow-lg);
+  font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em;
+  transition: transform 0.3s var(--ease), background 0.3s var(--ease), opacity 0.2s var(--ease);
+}
+.chat-fab:hover { transform: translateY(-3px); background: var(--green); }
+.chat-fab.hidden { opacity: 0; pointer-events: none; transform: scale(0.9); }
+
+.chat-panel {
+  position: fixed; z-index: 81; right: clamp(0.75rem, 3vw, 1.75rem); bottom: clamp(0.75rem, 3vw, 1.75rem);
+  width: min(380px, calc(100vw - 1.5rem)); height: min(600px, calc(100vh - 1.5rem));
+  display: flex; flex-direction: column; overflow: hidden;
+  background: var(--canvas); border: 1px solid var(--line); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  opacity: 0; transform: translateY(16px) scale(0.98); pointer-events: none;
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.chat-panel.open { opacity: 1; transform: none; pointer-events: auto; }
+
+.chat-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+  padding: 0.9rem 1rem; background: var(--green); color: #f3efe6;
+}
+:root[data-theme="dark"] .chat-head { background: #14271b; }
+.chat-title { display: block; font-family: var(--font-display); font-size: 1.05rem; }
+.chat-status { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; opacity: 0.85; }
+.chat-status .dot { width: 7px; height: 7px; border-radius: 50%; background: #7fdfa0; }
+.chat-head .icon-btn { color: #f3efe6; }
+.chat-head .icon-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+.chat-log { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 0.85rem; }
+.chat-msg { display: flex; flex-direction: column; gap: 0.5rem; max-width: 88%; }
+.chat-msg.user { align-self: flex-end; align-items: flex-end; }
+.chat-msg.assistant { align-self: flex-start; }
+.chat-bubble {
+  padding: 0.7rem 0.95rem; border-radius: 14px; font-size: 0.9rem; line-height: 1.5;
+  background: var(--surface); border: 1px solid var(--line); color: var(--ink);
+}
+.chat-msg.user .chat-bubble { background: var(--ink); color: var(--canvas); border-color: var(--ink); border-bottom-right-radius: 4px; }
+.chat-msg.assistant .chat-bubble { border-bottom-left-radius: 4px; }
+.chat-bubble.typing { display: inline-flex; gap: 4px; }
+.chat-bubble.typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-faint); animation: chatType 1s infinite ease-in-out; }
+.chat-bubble.typing span:nth-child(2) { animation-delay: 0.15s; }
+.chat-bubble.typing span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes chatType { 0%, 60%, 100% { opacity: 0.3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+
+.chat-products { display: flex; flex-direction: column; gap: 0.5rem; width: 100%; }
+.chat-product {
+  display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+}
+.chat-product-media { position: relative; width: 48px; height: 48px; flex-shrink: 0; border-radius: 6px; overflow: hidden; background: var(--surface-2); }
+.chat-product-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.chat-product-title { font-size: 0.82rem; font-weight: 500; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chat-product-price { font-size: 0.78rem; color: var(--gold-strong); }
+.chat-add {
+  flex-shrink: 0; border: 1px solid var(--line); background: transparent; color: var(--ink);
+  font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 0.4rem 0.7rem; border-radius: var(--radius); transition: all 0.2s var(--ease);
+}
+.chat-add:hover { background: var(--ink); color: var(--canvas); border-color: var(--ink); }
+
+.chat-order { width: 100%; padding: 0.85rem 1rem; border-radius: 12px; background: color-mix(in srgb, var(--green) 12%, var(--surface)); border: 1px solid color-mix(in srgb, var(--green) 30%, var(--line)); font-size: 0.85rem; }
+.chat-order strong { display: block; color: var(--green-soft); margin-bottom: 0.4rem; }
+.chat-order ul { margin: 0 0 0.4rem; padding-inline-start: 1.1rem; color: var(--ink-soft); }
+.chat-order-total { font-weight: 600; color: var(--ink); }
+
+.chat-quick { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0 1rem 0.75rem; }
+.chat-quick .chip { font-size: 0.74rem; padding: 0.45rem 0.8rem; }
+
+.chat-input { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem; border-top: 1px solid var(--line); background: var(--surface); }
+.chat-input input {
+  flex: 1; font-family: inherit; font-size: 0.9rem; color: var(--ink); background: var(--canvas);
+  border: 1px solid var(--line); border-radius: 999px; padding: 0.65rem 1rem;
+}
+.chat-input input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 16%, transparent); }
+.chat-send {
+  flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--ink); color: var(--canvas); border: none; transition: all 0.25s var(--ease);
+}
+.chat-send:hover:not(:disabled) { background: var(--green); }
+.chat-send:disabled { opacity: 0.45; cursor: default; }
+
+@media (max-width: 480px) {
+  .chat-panel { right: 0.5rem; left: 0.5rem; bottom: 0.5rem; width: auto; height: min(78vh, 560px); }
+  .chat-fab span { display: none; }
+  .chat-fab { padding: 0.9rem; }
+}
