@@ -27,7 +27,8 @@
       "Bash(kill 51618)",
       "Bash(python3 scripts/search.py \"luxury beauty ecommerce hero landing premium skincare elegant\" --design-system -p \"Luxury.ae\")",
       "Bash(python3 scripts/search.py \"hero carousel autoplay animation accessibility reduced-motion\" --domain ux -n 6)",
-      "Bash(kill 53858)"
+      "Bash(kill 53858)",
+      "Bash(kill 54409)"
     ]
   }
 }

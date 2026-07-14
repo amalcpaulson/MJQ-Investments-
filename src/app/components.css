@@ -636,35 +636,9 @@
 }
 .pill-glass:hover { background: rgba(250,244,230,0.22); transform: translateY(-3px); }
 
-/* video-style controls: pause + progress bars */
-.showcase-controls {
-  position: absolute; z-index: 4; bottom: clamp(1.5rem, 3.5vw, 2.75rem);
-  left: clamp(1.25rem, 3vw, 2.5rem);
-  display: flex; align-items: center; gap: 0.9rem;
-}
-.showcase-play {
-  flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%;
-  display: grid; place-items: center;
-  background: rgba(250,244,230,0.12); border: 1px solid rgba(250,244,230,0.3);
-  color: #faf4e6; backdrop-filter: blur(8px); transition: background 0.25s var(--ease);
-}
-.showcase-play:hover { background: rgba(250,244,230,0.24); }
-.showcase-bars { display: flex; align-items: center; gap: 0.4rem; }
-.showcase-bar {
-  position: relative; width: clamp(26px, 4vw, 54px); height: 4px; border-radius: 999px;
-  background: rgba(250,244,230,0.25); border: none; padding: 0; overflow: hidden; cursor: pointer;
-}
-.showcase-bar-fill { display: block; height: 100%; width: 0; background: #faf4e6; border-radius: inherit; }
-.showcase-bar.active .showcase-bar-fill { width: 33%; }
-.showcase-bar.done .showcase-bar-fill { width: 100%; }
-.showcase-bar-fill.run { animation: barFill linear forwards; }
-.showcase-bar-fill.paused { animation-play-state: paused; }
-@keyframes barFill { from { width: 0; } to { width: 100%; } }
-
 @media (max-width: 640px) {
-  .showcase-cta { bottom: clamp(4.75rem, 16vw, 6.5rem); flex-direction: column; align-items: center; }
+  .showcase-cta { bottom: clamp(2rem, 8vw, 3rem); flex-direction: column; align-items: center; }
   .showcase-cta .pill { width: min(86%, 340px); }
-  .showcase-controls { left: 50%; transform: translateX(-50%); bottom: 1.4rem; }
   .showcase-label { display: none; }
   .showcase-headline .line { font-size: clamp(3rem, 17vw, 6rem); }
 }

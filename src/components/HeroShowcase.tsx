@@ -21,7 +21,6 @@ const DURATION = 5000; // ms per slide
  */
 export default function HeroShowcase({ slides }: { slides: HeroSlide[] }) {
   const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
   const [reduced, setReduced] = useState(false);
   const timer = useRef<number | null>(null);
 
@@ -38,14 +37,14 @@ export default function HeroShowcase({ slides }: { slides: HeroSlide[] }) {
     setActive((i) => (i + 1) % slides.length);
   }, [slides.length]);
 
-  // Autoplay timer (restarts whenever active/pause changes).
+  // Autoplay timer (restarts whenever the active slide changes).
   useEffect(() => {
-    if (paused || reduced || slides.length <= 1) return;
+    if (reduced || slides.length <= 1) return;
     timer.current = window.setTimeout(advance, DURATION);
     return () => {
       if (timer.current) window.clearTimeout(timer.current);
     };
-  }, [active, paused, reduced, advance, slides.length]);
+  }, [active, reduced, advance, slides.length]);
 
   const current = slides[active];
 
@@ -85,45 +84,6 @@ export default function HeroShowcase({ slides }: { slides: HeroSlide[] }) {
         <div className="showcase-cta fade-up delay-4">
           <Link href="/collections" className="pill pill-primary">Shop the collection</Link>
           <Link href="/collections" className="pill pill-glass">Explore collection</Link>
-        </div>
-
-        <div className="showcase-controls">
-          {slides.length > 1 && !reduced && (
-            <button
-              type="button"
-              className="showcase-play"
-              aria-label={paused ? "Play slideshow" : "Pause slideshow"}
-              aria-pressed={paused}
-              onClick={() => setPaused((p) => !p)}
-            >
-              {paused ? (
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
-              ) : (
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z" /></svg>
-              )}
-            </button>
-          )}
-          <div className="showcase-bars" role="tablist" aria-label="Choose product">
-            {slides.map((s, i) => {
-              const running = i === active && !reduced;
-              return (
-                <button
-                  key={s.handle}
-                  type="button"
-                  role="tab"
-                  aria-selected={i === active}
-                  aria-label={s.title}
-                  className={`showcase-bar ${i === active ? "active" : ""} ${i < active ? "done" : ""}`}
-                  onClick={() => setActive(i)}
-                >
-                  <span
-                    className={`showcase-bar-fill ${running ? "run" : ""} ${running && paused ? "paused" : ""}`}
-                    style={running ? { animationDuration: `${DURATION}ms` } : undefined}
-                  />
-                </button>
-              );
-            })}
-          </div>
         </div>
       </div>
     </section>
