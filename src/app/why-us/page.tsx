@@ -1,34 +1,49 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getT } from "@/i18n/server";
+import { PAGES_AR } from "@/i18n/content-ar";
 
-export const metadata: Metadata = {
-  title: "Why Us",
-  description:
-    "Why buy from Luxury.ae — authentic premium brands, expert curation, fast UAE-wide delivery and secure checkout.",
+export const dynamic = "force-dynamic";
+export const metadata: Metadata = { title: "Why Us" };
+
+const EN = {
+  eyebrow: "The Luxury.ae difference",
+  h1: "Why buy from Luxury.ae?",
+  desc: "Everyday essentials become premium experiences through curated international brands built for the modern UAE lifestyle.",
+  pillars: [
+    { brand: "Marvis", title: "Premium Oral Care", body: "Bold flavours and elegant packaging that turn daily brushing into a refined ritual — from Jasmin Mint to Amarelli Licorice." },
+    { brand: "Fino", title: "Japanese Hair Care", body: "Shiseido's Fino Premium Touch nourishes and restores damaged hair with masks, oils and treatments loved worldwide." },
+    { brand: "Proraso", title: "Italian Grooming", body: "Traditional barber-quality shaving and beard care, made in Italy since 1948." },
+    { brand: "Guaranteed", title: "Authenticity", body: "Every product is sourced through trusted, official distribution channels — no imitations, ever." },
+  ],
+  h2: "Our promise",
+  promise: [
+    "Authentic products through trusted distribution channels.",
+    "Expert customer service and honest product recommendations.",
+    "Fast, reliable UAE-wide shipping — typically 2–5 business days.",
+    "Secure payment processing and a convenient shopping experience.",
+  ],
+  cta: "Start shopping",
 };
 
-const PILLARS = [
-  { title: "Premium Oral Care", brand: "Marvis", body: "Bold flavours and elegant packaging that turn daily brushing into a refined ritual — from Jasmin Mint to Amarelli Licorice." },
-  { title: "Japanese Hair Care", brand: "Fino", body: "Shiseido's Fino Premium Touch nourishes and restores damaged hair with masks, oils and treatments loved worldwide." },
-  { title: "Italian Grooming", brand: "Proraso", body: "Traditional barber-quality shaving and beard care, made in Italy since 1948." },
-  { title: "Authenticity", brand: "Guaranteed", body: "Every product is sourced through trusted, official distribution channels — no imitations, ever." },
-];
+export default async function WhyUsPage() {
+  const { locale, t } = await getT();
+  const c = locale === "ar" ? PAGES_AR.why : EN;
 
-export default function WhyUsPage() {
   return (
     <main id="main" className="section container content-page">
       <nav className="breadcrumb" aria-label="Breadcrumb">
-        <Link href="/">Home</Link> <span>/</span> <span>Why Us</span>
+        <Link href="/">{t("common.home")}</Link> <span>/</span> <span>{t("footer.why")}</span>
       </nav>
 
       <div className="page-head">
-        <span className="eyebrow">The Luxury.ae difference</span>
-        <h1>Why buy from Luxury.ae?</h1>
-        <p>Everyday essentials become premium experiences through curated international brands built for the modern UAE lifestyle.</p>
+        <span className="eyebrow">{c.eyebrow}</span>
+        <h1>{c.h1}</h1>
+        <p>{c.desc}</p>
       </div>
 
       <div className="pillar-grid">
-        {PILLARS.map((p) => (
+        {c.pillars.map((p) => (
           <div key={p.title} className="pillar">
             <span className="pillar-brand">{p.brand}</span>
             <h3>{p.title}</h3>
@@ -38,17 +53,12 @@ export default function WhyUsPage() {
       </div>
 
       <div className="rich-text prose">
-        <h2>Our promise</h2>
-        <ul>
-          <li>Authentic products through trusted distribution channels.</li>
-          <li>Expert customer service and honest product recommendations.</li>
-          <li>Fast, reliable UAE-wide shipping — typically 2–5 business days.</li>
-          <li>Secure payment processing and a convenient shopping experience.</li>
-        </ul>
+        <h2>{c.h2}</h2>
+        <ul>{c.promise.map((li, i) => <li key={i}>{li}</li>)}</ul>
       </div>
 
       <div className="content-cta">
-        <Link href="/collections" className="btn btn-primary">Start shopping</Link>
+        <Link href="/collections" className="btn btn-primary">{c.cta}</Link>
       </div>
     </main>
   );

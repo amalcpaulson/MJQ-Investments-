@@ -744,3 +744,55 @@
   .chat-fab span { display: none; }
   .chat-fab { padding: 0.9rem; }
 }
+
+/* ==========================================================================
+   Internationalization — Arabic fonts, language toggle, RTL overrides
+   ========================================================================== */
+
+/* Arabic typography (applied when the document is RTL) */
+:root[dir="rtl"] {
+  --font-display: var(--font-cairo), "Cairo", "Tajawal", sans-serif;
+  --font-body: var(--font-tajawal), "Tajawal", "Cairo", system-ui, sans-serif;
+}
+:root[dir="rtl"] .hero h1 em,
+:root[dir="rtl"] .showcase-headline { letter-spacing: 0; }
+
+/* Language toggle — compact, matches the header icon buttons */
+.lang-toggle {
+  height: 40px; min-width: 40px; padding: 0 0.75rem; border-radius: 999px;
+  display: inline-grid; place-items: center; white-space: nowrap;
+  background: transparent; border: 1px solid var(--line); color: var(--ink-soft);
+  font-family: "Tajawal", var(--font-tajawal), system-ui, sans-serif;
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.02em; line-height: 1;
+  transition: all 0.25s var(--ease);
+}
+.lang-toggle:hover { border-color: var(--gold); color: var(--ink); background: var(--surface-2); }
+@media (max-width: 400px) { .lang-toggle { padding: 0 0.55rem; font-size: 0.72rem; } }
+
+/* ---- RTL positional overrides (physical left/right that don't auto-mirror) ---- */
+[dir="rtl"] .nav a::after { left: auto; right: 0; }
+[dir="rtl"] .cart-count { transform: translate(-60%, -60%); }
+[dir="rtl"] .badge { right: auto; left: 0.75rem; }
+[dir="rtl"] .badge-sale { left: auto; right: 0.75rem; }
+[dir="rtl"] .product-compare { margin-inline-start: 0.5rem; }
+[dir="rtl"] .search-field svg { left: auto; right: 0.85rem; }
+[dir="rtl"] .search-field input { padding: 0.6rem 2.4rem 0.6rem 1rem; }
+[dir="rtl"] .skip-link { left: auto; right: 1rem; }
+[dir="rtl"] .house-origin { left: auto; right: 1rem; }
+[dir="rtl"] .cat-arrow { transform: scaleX(-1); }
+[dir="rtl"] .cat-tile:hover .cat-arrow { transform: scaleX(-1) translate(3px, -3px); }
+
+/* hero floating accent card mirrors to the other corner */
+[dir="rtl"] .hero-photo-accent { left: auto; right: -8%; }
+
+/* concierge widget moves to the opposite corner */
+[dir="rtl"] .chat-fab { right: auto; left: clamp(1rem, 3vw, 1.75rem); }
+[dir="rtl"] .chat-panel { right: auto; left: clamp(0.75rem, 3vw, 1.75rem); }
+[dir="rtl"] .chat-msg.user .chat-bubble { border-bottom-right-radius: 14px; border-bottom-left-radius: 4px; }
+[dir="rtl"] .chat-msg.assistant .chat-bubble { border-bottom-left-radius: 14px; border-bottom-right-radius: 4px; }
+@media (max-width: 480px) {
+  [dir="rtl"] .chat-panel { left: 0.5rem; right: 0.5rem; }
+}
+
+/* Latin brand wordmark stays left-to-right even in RTL */
+[dir="rtl"] .brand { direction: ltr; }

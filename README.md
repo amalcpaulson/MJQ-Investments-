@@ -109,6 +109,7 @@ form writes to `subscribers` via a Server Action (`src/app/actions.ts`).
 - **Neon + Drizzle integration** — products, collections and blog posts read live from Postgres; newsletter persists to `subscribers`.
 - **Shopping cart** — add/remove/quantity, subtotal + shipping + total, free-shipping threshold, checkout confirmation; persisted to `localStorage` via a `useSyncExternalStore` store.
 - **Concierge chatbot** — a floating assistant (`/api/chat`) that searches the catalogue and **places orders in chat**, writing to the Neon `orders` table. Currently a deterministic assistant (keyword search + guided checkout); designed so an AI-powered conversational mode can be layered on later.
+- **Bilingual EN / Arabic with full RTL** — a cookie-based locale (header toggle, no URL change) drives `dir="rtl"`, Arabic fonts (Cairo + Tajawal), and translated UI, product names/descriptions, content pages, policies, and the concierge chat. Blog article bodies remain in their source English.
 - **Browsing** — brand filter, live search and price sort with an accessible empty state; product detail with image gallery + related products.
 - **Newsletter** with client + server email validation, `onConflictDoNothing` de-dupe, success/error feedback.
 - **Dark mode** (no-flash, system-aware, persisted).
@@ -122,7 +123,6 @@ form writes to `subscribers` via a Server Action (`src/app/actions.ts`).
 - Real checkout + payment gateways for the UAE (Tabby, Tamara, card, COD).
 - Accounts/auth, wishlist, order history; server-side cart.
 - AI-powered concierge (natural-language search + ordering) on top of the existing `/api/chat` route.
-- Bilingual **EN / Arabic** with full RTL (the CSS already uses logical properties).
 - Admin panel for catalogue & inventory management.
 - Automated tests (Vitest/Playwright) and 301 redirects from the legacy Shopify URLs.
 

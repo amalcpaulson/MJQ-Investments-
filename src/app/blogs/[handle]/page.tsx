@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getBlogPost, getBlogPosts } from "@/lib/catalog";
+import { getT } from "@/i18n/server";
 
 export const dynamic = "force-dynamic";
 
@@ -20,6 +21,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function BlogPost({ params }: Params) {
   const { handle } = await params;
+  const { t } = await getT();
   const post = await getBlogPost(handle);
   if (!post) notFound();
 
@@ -29,8 +31,8 @@ export default async function BlogPost({ params }: Params) {
   return (
     <main id="main" className="section container article">
       <nav className="breadcrumb" aria-label="Breadcrumb">
-        <Link href="/">Home</Link> <span>/</span>
-        <Link href="/blogs">Journal</Link> <span>/</span> <span className="crumb-current">{post.title}</span>
+        <Link href="/">{t("common.home")}</Link> <span>/</span>
+        <Link href="/blogs">{t("journal.eyebrow")}</Link> <span>/</span> <span className="crumb-current">{post.title}</span>
       </nav>
 
       <header className="article-head">
@@ -42,14 +44,14 @@ export default async function BlogPost({ params }: Params) {
 
       {more.length > 0 && (
         <section className="section">
-          <div className="section-head"><div><span className="eyebrow">Keep reading</span><h2>More from the Journal</h2></div></div>
+          <div className="section-head"><div><span className="eyebrow">{t("journal.keepReading")}</span><h2>{t("journal.more")}</h2></div></div>
           <div className="journal-grid">
             {more.map((p) => (
               <Link key={p.handle} href={`/blogs/${p.handle}`} className="journal-card">
                 <span className="journal-date">{p.published}</span>
                 <h3>{p.title}</h3>
                 <p>{p.excerpt}</p>
-                <span className="journal-more">Read more →</span>
+                <span className="journal-more">{t("journal.readMore")}</span>
               </Link>
             ))}
           </div>

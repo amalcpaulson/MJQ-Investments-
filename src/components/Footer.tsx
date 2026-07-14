@@ -1,38 +1,40 @@
 import Link from "next/link";
+import { getT } from "@/i18n/server";
 
 const COLUMNS = [
   {
-    heading: "Shop",
+    heading: "footer.shop",
     links: [
-      { label: "Toothpaste", href: "/collections/marvis" },
-      { label: "Mouthwash", href: "/collections/mouthwash" },
-      { label: "Hair Care", href: "/collections/fino" },
-      { label: "Grooming", href: "/collections/proraso" },
-      { label: "Gift Sets", href: "/collections/gift-set-collection" },
+      { key: "nav.toothpaste", href: "/collections/marvis" },
+      { key: "nav.mouthwash", href: "/collections/mouthwash" },
+      { key: "nav.hairCare", href: "/collections/fino" },
+      { key: "nav.grooming", href: "/collections/proraso" },
+      { key: "nav.giftSets", href: "/collections/gift-set-collection" },
     ],
   },
   {
-    heading: "Maison",
+    heading: "footer.maison",
     links: [
-      { label: "About Us", href: "/about" },
-      { label: "Why Us", href: "/why-us" },
-      { label: "The Journal", href: "/blogs" },
-      { label: "Contact", href: "/contact" },
+      { key: "footer.about", href: "/about" },
+      { key: "footer.why", href: "/why-us" },
+      { key: "footer.journal", href: "/blogs" },
+      { key: "footer.contact", href: "/contact" },
     ],
   },
   {
-    heading: "Care",
+    heading: "footer.care",
     links: [
-      { label: "Shipping & Returns", href: "/policies/shipping-returns" },
-      { label: "FAQ", href: "/faq" },
-      { label: "Privacy Policy", href: "/policies/privacy" },
-      { label: "Terms of Service", href: "/policies/terms" },
+      { key: "footer.shipping", href: "/policies/shipping-returns" },
+      { key: "footer.faq", href: "/faq" },
+      { key: "footer.privacy", href: "/policies/privacy" },
+      { key: "footer.terms", href: "/policies/terms" },
     ],
   },
 ];
 
-export default function Footer() {
-  const year = 2026; // build-time constant; avoids hydration drift
+export default async function Footer() {
+  const { t } = await getT();
+  const year = 2026;
 
   return (
     <footer className="site-footer">
@@ -41,10 +43,7 @@ export default function Footer() {
           <span className="brand">
             LUXURY<span className="dot-ae" style={{ color: "var(--gold)" }}>.ae</span>
           </span>
-          <p>
-            A luxury shopping &amp; brand-discovery platform for the modern UAE lifestyle.
-            Authentic beauty, hair and grooming, beautifully delivered.
-          </p>
+          <p>{t("footer.tagline")}</p>
           <p className="footer-contact">
             <a href="tel:+97148804005">04 880 4005</a> &nbsp;·&nbsp;
             <a href="mailto:mk@mjqinvestment.com">mk@mjqinvestment.com</a>
@@ -52,18 +51,18 @@ export default function Footer() {
         </div>
 
         {COLUMNS.map((col) => (
-          <nav key={col.heading} className="footer-col" aria-label={col.heading}>
-            <h4>{col.heading}</h4>
+          <nav key={col.heading} className="footer-col" aria-label={t(col.heading)}>
+            <h4>{t(col.heading)}</h4>
             {col.links.map((link) => (
-              <Link key={link.label} href={link.href}>{link.label}</Link>
+              <Link key={link.key} href={link.href}>{t(link.key)}</Link>
             ))}
           </nav>
         ))}
       </div>
 
       <div className="container footer-bottom">
-        <span>&copy; {year} Luxury.ae — a MJQ Investment LLC company. All rights reserved.</span>
-        <span>Dubai, United Arab Emirates</span>
+        <span>{t("footer.rights", { year })}</span>
+        <span>{t("footer.city")}</span>
       </div>
     </footer>
   );

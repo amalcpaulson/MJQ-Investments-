@@ -3,8 +3,9 @@ import { db } from "./db";
 import { orders, type OrderLine } from "../db/schema";
 import type { Product } from "../db/schema";
 import { getProducts } from "./catalog";
+import { PRODUCTS_AR } from "../i18n/content-ar";
 
-/** Keyword search over the catalogue (title / vendor / description). */
+/** Keyword search over the catalogue (English + Arabic title / description). */
 export async function searchProducts(query: string, limit = 6): Promise<Product[]> {
   const { rows } = await getProducts();
   const q = query.trim().toLowerCase();
@@ -12,7 +13,8 @@ export async function searchProducts(query: string, limit = 6): Promise<Product[
   const terms = q.split(/\s+/).filter(Boolean);
   const scored = rows
     .map((p) => {
-      const hay = `${p.title} ${p.vendor} ${p.productType} ${p.excerpt}`.toLowerCase();
+      const ar = PRODUCTS_AR[p.handle];
+      const hay = `${p.title} ${p.vendor} ${p.productType} ${p.excerpt} ${ar?.title ?? ""} ${ar?.description ?? ""}`.toLowerCase();
       const score = terms.reduce((n, t) => n + (hay.includes(t) ? 1 : 0), 0);
       return { p, score };
     })

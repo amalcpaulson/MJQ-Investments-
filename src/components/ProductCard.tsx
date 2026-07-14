@@ -1,20 +1,24 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import type { Product } from "../db/schema";
 import { formatPrice, brandAccent } from "../lib/format";
+import { useT } from "@/i18n/client";
 import AddToCartButton from "./cart/AddToCartButton";
 
 /** Product card with real imagery, price, and add-to-cart. */
 export default function ProductCard({ product }: { product: Product }) {
+  const { t } = useT();
   const href = `/products/${product.handle}`;
   const onSale = product.compareAtFils && product.compareAtFils > product.priceFils;
 
   return (
-    <article className="product-card reveal-scroll">
+    <article className="product-card">
       <Link href={href} className="product-art-link" aria-label={product.title}>
         <div className="product-art" style={{ "--card-accent": brandAccent(product.vendor) } as React.CSSProperties}>
-          {product.featured && <span className="badge">Featured</span>}
-          {onSale && <span className="badge badge-sale">Sale</span>}
+          {product.featured && <span className="badge">{t("common.featured")}</span>}
+          {onSale && <span className="badge badge-sale">{t("common.sale")}</span>}
           {product.image ? (
             <Image
               src={product.image}

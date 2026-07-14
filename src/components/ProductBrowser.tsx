@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import type { Product } from "../db/schema";
+import { useT } from "@/i18n/client";
 import ProductCard from "./ProductCard";
 import { SearchIcon } from "./icons";
 
@@ -15,6 +16,7 @@ type Sort = "featured" | "price-asc" | "price-desc";
 
 /** Client-side browsing: brand filter + search + sort, with empty state. */
 export default function ProductBrowser({ products, brands = true }: Props) {
+  const { t, plural } = useT();
   const [brand, setBrand] = useState("all");
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<Sort>("featured");
@@ -46,7 +48,7 @@ export default function ProductBrowser({ products, brands = true }: Props) {
     <>
       <div className="controls">
         {brands && (
-          <div className="filters" role="group" aria-label="Filter by brand">
+          <div className="filters" role="group" aria-label={t("browser.allBrands")}>
             {brandList.map((b) => (
               <button
                 key={b}
@@ -55,7 +57,7 @@ export default function ProductBrowser({ products, brands = true }: Props) {
                 aria-pressed={brand === b}
                 onClick={() => setBrand(b)}
               >
-                {b === "all" ? "All brands" : b}
+                {b === "all" ? t("browser.allBrands") : b}
               </button>
             ))}
           </div>
@@ -64,32 +66,32 @@ export default function ProductBrowser({ products, brands = true }: Props) {
         <div className="controls-right">
           <div className="search-field">
             <SearchIcon />
-            <label htmlFor="browse-search" className="visually-hidden">Search products</label>
+            <label htmlFor="browse-search" className="visually-hidden">{t("common.search")}</label>
             <input
               id="browse-search"
               type="search"
-              placeholder="Search…"
+              placeholder={t("common.searchPlaceholder")}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               autoComplete="off"
             />
           </div>
-          <label htmlFor="browse-sort" className="visually-hidden">Sort products</label>
+          <label htmlFor="browse-sort" className="visually-hidden">{t("browser.sortFeatured")}</label>
           <select
             id="browse-sort"
             className="sort-select"
             value={sort}
             onChange={(e) => setSort(e.target.value as Sort)}
           >
-            <option value="featured">Featured</option>
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
+            <option value="featured">{t("browser.sortFeatured")}</option>
+            <option value="price-asc">{t("browser.sortPriceAsc")}</option>
+            <option value="price-desc">{t("browser.sortPriceDesc")}</option>
           </select>
         </div>
       </div>
 
       <p className="result-count" aria-live="polite">
-        {visible.length} {visible.length === 1 ? "product" : "products"}
+        {plural("common.products", visible.length)}
       </p>
 
       {visible.length > 0 ? (
@@ -101,8 +103,8 @@ export default function ProductBrowser({ products, brands = true }: Props) {
       ) : (
         <div className="product-grid">
           <div className="empty" role="status">
-            <h3>Nothing matches</h3>
-            <p>Try a different brand or search term.</p>
+            <h3>{t("browser.emptyTitle")}</h3>
+            <p>{t("browser.emptyDesc")}</p>
           </div>
         </div>
       )}

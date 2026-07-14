@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getBlogPosts } from "@/lib/catalog";
+import { getT } from "@/i18n/server";
 
 export const dynamic = "force-dynamic";
 
@@ -10,19 +11,20 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogIndex() {
+  const { t } = await getT();
   const { rows: posts } = await getBlogPosts();
   const [lead, ...rest] = posts;
 
   return (
     <main id="main" className="section container">
       <nav className="breadcrumb" aria-label="Breadcrumb">
-        <Link href="/">Home</Link> <span>/</span> <span>Journal</span>
+        <Link href="/">{t("common.home")}</Link> <span>/</span> <span>{t("journal.eyebrow")}</span>
       </nav>
 
       <div className="page-head">
-        <span className="eyebrow">The Journal</span>
-        <h1>Stories &amp; rituals</h1>
-        <p>Notes on the houses we carry and how to get the most from them.</p>
+        <span className="eyebrow">{t("journal.eyebrow")}</span>
+        <h1>{t("journal.title")}</h1>
+        <p>{t("journal.lead")}</p>
       </div>
 
       {lead && (
@@ -30,7 +32,7 @@ export default async function BlogIndex() {
           <span className="journal-date">{lead.published}</span>
           <h2>{lead.title}</h2>
           <p>{lead.excerpt}</p>
-          <span className="journal-more">Read article →</span>
+          <span className="journal-more">{t("journal.readArticle")}</span>
         </Link>
       )}
 
@@ -40,7 +42,7 @@ export default async function BlogIndex() {
             <span className="journal-date">{post.published}</span>
             <h3>{post.title}</h3>
             <p>{post.excerpt}</p>
-            <span className="journal-more">Read more →</span>
+            <span className="journal-more">{t("journal.readMore")}</span>
           </Link>
         ))}
       </div>

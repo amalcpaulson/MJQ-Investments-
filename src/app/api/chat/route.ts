@@ -1,5 +1,8 @@
 import { searchProducts, createOrder, makeOrderNumber } from "@/lib/shop";
 import { formatPrice } from "@/lib/format";
+import { translate, plural } from "@/i18n/dictionaries";
+import { isLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
+import { PRODUCTS_AR } from "@/i18n/content-ar";
 import type { Product } from "@/db/schema";
 
 export const runtime = "nodejs";
@@ -8,79 +11,71 @@ export const dynamic = "force-dynamic";
 interface ChatMessage { role: "user" | "assistant"; content: string }
 interface CartItem { handle: string; title: string; priceFils: number; qty: number }
 
-interface ChatResult {
-  reply: string;
-  products?: { handle: string; title: string; vendor: string; price: string; image: string | null }[];
-  order?: { orderNumber: string; total: string; lines: { title: string; qty: number }[] };
-}
-
 const EMAIL_RE = /[^\s@,;]+@[^\s@,;]+\.[a-zA-Z]{2,24}/;
 
-function productCard(p: Product) {
-  return { handle: p.handle, title: p.title, vendor: p.vendor, price: formatPrice(p.priceFils), image: p.image };
+function localizeTitle(p: { handle: string; title: string }, locale: Locale): string {
+  return locale === "ar" && PRODUCTS_AR[p.handle] ? PRODUCTS_AR[p.handle].title : p.title;
+}
+function productCard(p: Product, locale: Locale) {
+  return { handle: p.handle, title: localizeTitle(p, locale), vendor: p.vendor, price: formatPrice(p.priceFils), image: p.image };
 }
 
 /**
  * Concierge assistant — deterministic product search + in-chat ordering against
- * Neon. (An AI-powered conversational mode can be layered on later.)
+ * Neon, in the caller's locale. (An AI mode can be layered on later.)
  */
 export async function POST(req: Request) {
-  let body: { messages?: ChatMessage[]; cart?: CartItem[] };
+  let body: { messages?: ChatMessage[]; cart?: CartItem[]; locale?: string };
   try {
     body = await req.json();
   } catch {
-    return Response.json({ reply: "Sorry, I couldn't read that." }, { status: 400 });
+    return Response.json({ reply: "…" }, { status: 400 });
   }
 
+  const locale: Locale = isLocale(body.locale) ? body.locale : DEFAULT_LOCALE;
+  const t = (key: string, vars?: Record<string, string | number>) => translate(locale, key, vars);
   const messages = (body.messages ?? []).slice(-12).filter((m) => m && m.content?.trim());
   const cart = (body.cart ?? []).filter((c) => c && c.handle);
   const orderNumber = makeOrderNumber(Date.now());
 
-  return Response.json(await runAssistant(messages, cart, orderNumber));
-}
-
-async function runAssistant(messages: ChatMessage[], cart: CartItem[], orderNumber: string): Promise<ChatResult> {
   const last = [...messages].reverse().find((m) => m.role === "user")?.content ?? "";
   const text = last.toLowerCase();
-  const wantsOrder = /\b(order|checkout|buy|purchase|place|confirm)\b/.test(text);
+  const wantsOrder = /\b(order|checkout|buy|purchase|place|confirm)\b/.test(text) || /(اطلب|طلب|شراء|اشتري|إتمام|الدفع|أكمل|تأكيد)/.test(last);
   const email = last.match(EMAIL_RE)?.[0];
 
   if (wantsOrder) {
-    if (cart.length === 0) {
-      return { reply: "Your cart is empty at the moment — add a few things and I'll place the order for you." };
-    }
+    if (cart.length === 0) return Response.json({ reply: t("chat.rEmpty") });
     if (!email) {
       const total = formatPrice(cart.reduce((n, c) => n + c.priceFils * c.qty, 0));
-      return {
-        reply: `Happy to place your order (${cart.length} item${cart.length > 1 ? "s" : ""}, ${total}). Please reply with your email, name and delivery address.`,
-      };
+      return Response.json({ reply: t("chat.rNeedInfo", { n: plural(locale, "common.products", cart.length), total }) });
     }
     const phone = last.match(/(\+?\d[\d\s-]{6,})/)?.[0]?.trim() ?? "";
-    const name = last.match(/\bname[:\s]+([a-z .'-]{2,40})/i)?.[1]?.trim() || "Guest";
+    const name = last.match(/\bname[:\s]+([a-z .'-]{2,40})/i)?.[1]?.trim() || (locale === "ar" ? "زائر" : "Guest");
     try {
       const placed = await createOrder(
         { name, email, phone, address: last, items: cart.map((c) => ({ handle: c.handle, qty: c.qty })), channel: "chatbot" },
         orderNumber
       );
-      return {
-        reply: `Order confirmed — thank you! Your order number is ${placed.orderNumber} and the total is ${formatPrice(placed.totalFils)}. A confirmation will be emailed to ${email}.`,
-        order: { orderNumber: placed.orderNumber, total: formatPrice(placed.totalFils), lines: placed.lines.map((l) => ({ title: l.title, qty: l.qty })) },
-      };
+      return Response.json({
+        reply: t("chat.rConfirmed", { n: placed.orderNumber, total: formatPrice(placed.totalFils), email }),
+        order: {
+          orderNumber: placed.orderNumber,
+          total: formatPrice(placed.totalFils),
+          lines: placed.lines.map((l) => ({ title: localizeTitle(l, locale), qty: l.qty })),
+        },
+      });
     } catch {
-      return { reply: "Something went wrong placing that order. Please try again in a moment." };
+      return Response.json({ reply: t("chat.rFail") });
     }
   }
 
-  // Product discovery.
   const results = await searchProducts(last, 4);
   if (results.length > 0) {
-    return {
-      reply: `Here are a few options I found${last.trim() ? ` for “${last.trim()}”` : ""}. Tap a product to view it, or add items and say “checkout” to order.`,
-      products: results.map(productCard),
-    };
+    return Response.json({
+      reply: last.trim() ? t("chat.rResultsQ", { q: last.trim() }) : t("chat.rResults"),
+      products: results.map((p) => productCard(p, locale)),
+    });
   }
 
-  return {
-    reply: "I'm the Luxury.ae concierge — I can help you find Marvis toothpaste, Fino hair care or Proraso grooming, and place your order. What are you looking for?",
-  };
+  return Response.json({ reply: t("chat.rHelp") });
 }

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useCart } from "./CartProvider";
+import { useT } from "@/i18n/client";
 
 interface Props {
   handle: string;
@@ -22,16 +23,17 @@ export default function AddToCartButton({
   priceFils,
   available = true,
   className = "add-btn",
-  label = "Add",
+  label,
   compact,
 }: Props) {
   const { add } = useCart();
+  const { t } = useT();
   const [added, setAdded] = useState(false);
 
   if (!available) {
     return (
       <button type="button" className={className} disabled aria-disabled="true">
-        Sold out
+        {t("common.soldOut")}
       </button>
     );
   }
@@ -47,9 +49,9 @@ export default function AddToCartButton({
       type="button"
       className={className}
       onClick={onClick}
-      aria-label={`Add ${title} to cart`}
+      aria-label={`${t("common.add")} — ${title}`}
     >
-      {added ? (compact ? "✓" : "Added ✓") : label}
+      {added ? (compact ? "✓" : t("common.added")) : label ?? t("common.add")}
     </button>
   );
 }

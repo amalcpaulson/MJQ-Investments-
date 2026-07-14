@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { getT } from "@/i18n/server";
 import { ArrowIcon } from "./icons";
 
 export interface CategoryTile {
@@ -10,16 +11,17 @@ export interface CategoryTile {
   image?: string | null;
 }
 
-/** Shop-by-category lookbook tiles with real product imagery. */
-export default function CategorySection({ tiles }: { tiles: CategoryTile[] }) {
+/** Shop-by-category lookbook tiles linking to real collection pages. */
+export default async function CategorySection({ tiles }: { tiles: CategoryTile[] }) {
+  const { t } = await getT();
   return (
     <section className="section container" id="categories">
-      <div className="section-head reveal-scroll">
+      <div className="section-head">
         <div>
-          <span className="eyebrow">Browse</span>
-          <h2>Shop by category</h2>
+          <span className="eyebrow">{t("categories.eyebrow")}</span>
+          <h2>{t("categories.title")}</h2>
         </div>
-        <p>Four disciplines of everyday luxury, each sourced from a house that defined it.</p>
+        <p>{t("categories.desc")}</p>
       </div>
 
       <div className="cat-grid">
@@ -27,14 +29,12 @@ export default function CategorySection({ tiles }: { tiles: CategoryTile[] }) {
           <Link
             key={cat.href}
             href={cat.href}
-            className="cat-tile reveal-scroll"
+            className="cat-tile"
             style={{ "--tile-accent": cat.accent } as React.CSSProperties}
-            aria-label={`Shop ${cat.name}`}
+            aria-label={cat.name}
           >
             <div className="cat-media">
-              {cat.image && (
-                <Image src={cat.image} alt={cat.name} fill sizes="(max-width: 900px) 50vw, 300px" className="cat-img" />
-              )}
+              {cat.image && <Image src={cat.image} alt={cat.name} fill sizes="(max-width: 900px) 50vw, 300px" className="cat-img" />}
             </div>
             <div className="cat-caption">
               <div>

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useT } from "@/i18n/client";
 
 export interface HeroSlide {
   handle: string;
@@ -20,6 +21,7 @@ const DURATION = 5000; // ms per slide
  * Inspired by premium skincare landing pages, adapted to the Luxury.ae brand.
  */
 export default function HeroShowcase({ slides }: { slides: HeroSlide[] }) {
+  const { t } = useT();
   const [active, setActive] = useState(0);
   const [reduced, setReduced] = useState(false);
   const timer = useRef<number | null>(null);
@@ -49,14 +51,14 @@ export default function HeroShowcase({ slides }: { slides: HeroSlide[] }) {
   const current = slides[active];
 
   return (
-    <section className="showcase" aria-roledescription="carousel" aria-label="Featured products">
+    <section className="showcase" aria-roledescription="carousel" aria-label={t("collection.title")}>
       <div className="showcase-panel">
         <div className="showcase-bg" aria-hidden="true" />
-        <span className="showcase-eyebrow fade-up delay-1">Luxury living, delivered in the UAE</span>
+        <span className="showcase-eyebrow fade-up delay-1">{t("hero.eyebrow")}</span>
 
-        <h1 className="showcase-headline" aria-label="Everyday luxury">
-          <span className="line line-1">EVERYDAY</span>
-          <span className="line line-2">LUXURY</span>
+        <h1 className="showcase-headline" aria-label={`${t("hero.line1")} ${t("hero.line2")}`}>
+          <span className="line line-1">{t("hero.line1")}</span>
+          <span className="line line-2">{t("hero.line2")}</span>
         </h1>
 
         <div className={`showcase-stage ${reduced ? "" : "floating"}`}>
@@ -82,8 +84,8 @@ export default function HeroShowcase({ slides }: { slides: HeroSlide[] }) {
         </Link>
 
         <div className="showcase-cta fade-up delay-4">
-          <Link href="/collections" className="pill pill-primary">Shop the collection</Link>
-          <Link href="/collections" className="pill pill-glass">Explore collection</Link>
+          <Link href="/collections" className="pill pill-primary">{t("hero.shop")}</Link>
+          <Link href="/collections" className="pill pill-glass">{t("hero.explore")}</Link>
         </div>
       </div>
     </section>
