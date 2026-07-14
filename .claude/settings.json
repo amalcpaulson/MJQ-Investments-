@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:luxuryuae.ae)",
+      "Bash(npm -v)",
+      "Bash(grep -rA3 \"searchParams: Promise\" node_modules/next/dist/docs/01-app)",
+      "Bash(echo \"started pid $!\")",
+      "Bash('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' --headless --disable-gpu --window-size=390,1400 --virtual-time-budget=1500 --run-all-compositor-stages-before-draw --dump-dom)",
+      "Bash(node -e ' *)",
+      "Bash(curl -s http://localhost:3000)",
+      "Bash('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' --headless=new --disable-gpu --remote-debugging-port=9222 --window-size=390,1400 about:blank)",
+      "Bash(echo \"chrome pid $!\")",
+      "Bash(curl -s http://localhost:9222/json/version)",
+      "Bash(kill 45832)",
+      "Bash(pkill -f \"remote-debugging-port=9222\")",
+      "Bash(kill 47421)"
+    ]
+  }
+}
